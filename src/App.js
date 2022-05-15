@@ -16,11 +16,11 @@ const App = () => {
   const addPrompt = (text) => {
     const id = Math.floor(Math.random() * 10000) + 1
     const newResponse = { id, ...text }
-    setResponses([...newResponse, responses])
+    setResponses([...responses, newResponse])
   }
 
   return (
-    <div className="container text-blue-500 font-4xl">
+    <div className="container text-gray-600">
       <Form onAdd={addPrompt} />
       {responses.length > 0 ? (
         <ResponseList responses={responses} />

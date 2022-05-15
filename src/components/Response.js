@@ -2,7 +2,7 @@
 
 const Response = ({ text }) => {
     return (
-        <div className="m-1.5 py-2.5 px-5 bg-green-100 text-gray-600">
+        <div className="m-1.5 py-2.5 px-5 bg-green-100 text-gray-600 rounded-md">
             <p>
                 <strong>Prompt: </strong>
                 {text.prompt}

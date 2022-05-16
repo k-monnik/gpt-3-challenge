@@ -1,26 +1,53 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { Configuration, OpenAIApi } from "openai";
 
-const Form = ({ onAdd }) => {
+const Form = () => {
 
-    const [text, setText] = useState('')
-    const [response, setResponse] = useState('')
+
 
     const submitValue = (e) => {
         e.preventDefault();
 
-        if (!text) {
-            alert('Please add some text')
-            return
-        }
+        // if (!text) {
+        //     alert('Please add some text')
+        //     return
+        // }
 
-        onAdd({ text })
+        const formData = new FormData(e.target),
+            formDataObj = Object.fromEntries(formData.entries())
+        console.log(formData.productName);
 
-        setText('')
-        setResponse('')
+        const configuration = new Configuration({
+            apiKey: process.env.OPENAI_API_KEY,
+        });
+        const openai = new OpenAIApi(configuration);
+
+        openai.createCompletion("text-curie-001", {
+            prompt: "Product description: A home milkshake maker\nSeed words: fast, healthy, compact.\nProduct names: HomeShaker, Fit Shaker, QuickShake, Shake Maker\n\nProduct description: A pair of shoes that can fit any foot size.\nSeed words: adaptable, fit, omni-fit.\nProduct names: Omni-Fit shoes, Adapta-Fit shoes, All-Fit shoes.",
+            temperature: 0.8,
+            max_tokens: 60,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+        })
+            .then((response) => {
+                this.setState({
+                    heading: `AI Product DEscription Suggestions for: ${formDataObj.productname}`,
+                    response: `${response.data.choices[0].text}`
+                })
+            });
+
+        // setText('')
+        // setResponses('')
 
     };
+
+
+
+
+
     return (
-        <div className="App">
+        <div className="">
             <header>
                 <h1 className="text-4xl">Fun with AI</h1>
             </header>
@@ -30,8 +57,8 @@ const Form = ({ onAdd }) => {
                     <textarea
                         id="text"
                         className="m-6"
-                        value={text}
-                        onChange={e => setText(e.target.value)}
+                    // value={text}
+                    // onChange={e => setText(e.target.value)}
 
                     />
                 </div>

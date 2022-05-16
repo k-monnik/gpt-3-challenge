@@ -1,4 +1,4 @@
-import './App.css';
+
 import { useState } from 'react';
 import Form from './components/Form';
 import ResponseList from './components/ResponseList';
@@ -20,7 +20,7 @@ const App = () => {
   }
 
   return (
-    <div className="container text-gray-600">
+    <div className="text-gray-600 bg-[#FFDBB4] min-h-screen">
       <Form onAdd={addPrompt} />
       {responses.length > 0 ? (
         <ResponseList responses={responses} />
